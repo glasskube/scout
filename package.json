@@ -1,0 +1,88 @@
+{
+  "author": "Philip Miglinci",
+  "bin": {
+    "scout": "./bin/run.js"
+  },
+  "dependencies": {
+    "@oclif/core": "^3",
+    "@octokit/rest": "^20.0.2",
+    "change-case": "^5.4.3",
+    "semver": "^7.6.0",
+    "yaml": "^2.3.4"
+  },
+  "description": "Glasskube package update util",
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.26.10",
+    "@oclif/prettier-config": "^0.2.1",
+    "@oclif/test": "^3",
+    "@types/chai": "^4",
+    "@types/mocha": "^10",
+    "@types/node": "^18",
+    "chai": "^4",
+    "eslint": "^8",
+    "eslint-config-oclif": "^5",
+    "eslint-config-oclif-typescript": "^3",
+    "eslint-config-prettier": "^9.1.0",
+    "json-schema-to-typescript": "^13.1.2",
+    "mocha": "^10",
+    "oclif": "^4.4.2",
+    "shx": "^0.3.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/glasskube/scout",
+  "license": "Apache-2.0",
+  "main": "",
+  "name": "@glasskube/scout",
+  "oclif": {
+    "bin": "scout",
+    "dirname": "scout",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "topics": {
+      "hello": {
+        "description": "Say hello to the world and others"
+      }
+    }
+  },
+  "repository": "glasskube/scout",
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -b",
+    "lint": "eslint . --ext .ts",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "npm run build && oclif manifest && oclif readme",
+    "prepare": "npm run build",
+    "test": "mocha --forbid-only \"src/**/*.test.ts\"",
+    "version": "oclif readme && git add README.md",
+    "generate:types:artifacthub": "wget https://raw.githubusercontent.com/artifacthub/hub/master/web/src/types.ts -O 'src/types/artifacthub/index.ts' && wget https://raw.githubusercontent.com/artifacthub/hub/master/web/src/jsonschema.ts -O 'src/types/artifacthub/jsonschema.ts'",
+    "generate:types:glasskube": "curl https://glasskube.dev/schemas/v1/package-manifest.json | json2ts > src/types/glasskube/package-manifest.d.ts && curl https://glasskube.dev/schemas/v1/index.json | json2ts > src/types/glasskube/index.d.ts && curl https://glasskube.dev/schemas/v1/versions.json | json2ts > src/types/glasskube/versions.d.ts",
+    "generate:types": "json2ts -i 'schemas/*.json' -o 'src/types/glasskube/'",
+    "scout:package:cyclops": "./bin/dev.js package cyclops --source='../packages/'",
+    "scout:package:cert-manager": "./bin/dev.js package cert-manager --source='../packages/'",
+    "scout:index": "./bin/dev.js index --source='../packages/'"
+  },
+  "version": "0.0.0",
+  "bugs": "https://github.com/glasskube/scout/issues",
+  "keywords": [
+    "oclif",
+    "glasskube",
+    "scout",
+    "kubernetes"
+  ],
+  "types": "dist/index.d.ts",
+  "exports": "./lib/index.js",
+  "type": "module"
+}
