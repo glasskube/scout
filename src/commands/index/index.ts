@@ -7,7 +7,9 @@ import {PackageIndex} from '../../types/types.js';
 import {getFoldersIn, write} from '../../utils/io/index.js';
 
 export default class Index extends Command {
-  static override readonly description = 'updates packages index'
+  static override readonly aliases = ['update:index'];
+
+  static override readonly description = 'updates packages index';
 
   static override readonly examples = [
     '<%= config.bin %> <%= command.id %>',

@@ -8,6 +8,8 @@ import {PackageReference, PlainManifest} from '../../types/glasskube/package-man
 import {parseArtifactHubReference, parseManifestUrl} from '../../utils/mapper/index.js';
 
 export default class Package extends Command {
+  static override readonly aliases = ['update:package'];
+
   static override readonly args = {
     package: Args.string({description: 'package to scout', required: true}),
   }
