@@ -8,33 +8,26 @@ describe('utils/package', () => {
     const input =
       `
 # yaml-language-server: $schema=../schema.json
-name: cyclops
-shortDescription: Developer friendly Kubernetes
+name: test-package
+shortDescription: Glasskube CI Test package
 longDescription: |
-  Welcome to Cyclops, a powerful user interface for managing and interacting with Kubernetes clusters.
-  Cyclops is designed to simplify the management of containerized applications on Kubernetes,
-  providing an intuitive and user-friendly experience for developers, system administrators, and DevOps professionals.
-  Divide the responsibility between your infrastructure and your developer teams so everyone can play to their strengths.
-  Automate your processes and shrink the window for deployment mistakes.
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ullamcorper magna sit amet mauris consectetur,
+  ut fermentum arcu vehicula. Nullam euismod lacus ut velit varius, sit amet gravida sapien viverra.
 references:
   - label: Github
-    url: https://github.com/cyclops-ui/cyclops
+    url: https://github.com/glasskube/glasskube
   - label: Website
-    url: https://cyclops-ui.com/
-defaultNamespace: cyclops
-iconUrl: https://cyclops-ui.com/img/logo.png
+    url: https://glasskube.dev/
+defaultNamespace: default
+iconUrl: https://glasskube.dev/img/logo.png
 manifests:
-  - url: https://raw.githubusercontent.com/cyclops-ui/cyclops/v0.0.1-alpha.10/install/cyclops-install.yaml
 entrypoints:
-  - serviceName: cyclops-ui
-    port: 3000
-    name: ui
-  - serviceName: cyclops-ctrl
+  - serviceName: example
     port: 8080
-    name: ctrl
+    name: test
             `
 
     const manifest = await parseYaml<PackageManifest>(input);
-    assert.equal(manifest.name, "cyclops");
+    assert.equal(manifest.name, "test-package");
   })
 })
