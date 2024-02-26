@@ -10,7 +10,7 @@ import {
   mapArtifactHubDataToPackage
 } from '../../services/index.js';
 import {PackageReference, PlainManifest} from '../../types/glasskube/package-manifest.js';
-import {ArtifactHubPackage, PackageManifest} from '../../types/types.js';
+import {PackageManifest} from '../../types/types.js';
 import {parseArtifactHubReference, parseManifestUrl} from '../../utils/mapper/index.js';
 
 export default class Package extends Command {
@@ -60,8 +60,6 @@ export default class Package extends Command {
       }
     }
 
-    let latestChart: ArtifactHubPackage | undefined;
-
     if (packageManifest.helm) {
       this.log(`found Helm release of chart ${packageManifest.helm.chartName} with version ${packageManifest.helm.chartVersion}`);
 
@@ -69,8 +67,8 @@ export default class Package extends Command {
 
       if (artifactHubUrl) {
         const artifactHub = parseArtifactHubReference(artifactHubUrl.url);
-        latestChart = await getArtifactPackage(artifactHub);
-        const latestChartVersion = new SemVer(latestChart.version!)
+        const latestChart = await getArtifactPackage(artifactHub);
+        const latestChartVersion = new SemVer(latestChart.version!);
 
         if (latestChartVersion.compare(new SemVer(packageManifest.helm.chartVersion))) {
           this.log(`new release on Artifact Hub: ${latestChartVersion}`);
