@@ -3,14 +3,8 @@ import {SemVer} from 'semver';
 
 import {getArtifactPackage} from '../../datasources/artifacthub/index.js';
 import {getLatestRelease} from '../../datasources/github-release/index.js';
-import {
-  createNewVersion,
-  getLatestManifest,
-  getLatestVersion,
-  mapArtifactHubDataToPackage
-} from '../../services/index.js';
+import {createNewVersion, getLatestManifest, getLatestVersion, updateHelmManifest} from '../../services/index.js';
 import {PackageReference, PlainManifest} from '../../types/glasskube/package-manifest.js';
-import {PackageManifest} from '../../types/types.js';
 import {parseArtifactHubReference, parseManifestUrl} from '../../utils/mapper/index.js';
 
 export default class Package extends Command {
@@ -40,8 +34,7 @@ export default class Package extends Command {
 
     const packageManifest = await getLatestManifest(args.package, flags.source);
 
-    const newPackageManifest: PackageManifest = JSON.parse(JSON.stringify(packageManifest));
-    newPackageManifest.manifests = [];
+    const newPackageManifests = [];
 
     let newPackageManifestAvailable = false;
     let newAppVersion = await getLatestVersion(args.package, flags.source)
@@ -54,11 +47,13 @@ export default class Package extends Command {
         newAppVersion = latestRelease;
         newPackageManifestAvailable = true;
         this.log(`new release on GitHub: ${latestRelease}`);
-        newPackageManifest.manifests.push({url: manifestUrl.raw.replace(manifestUrl.semVer.raw, latestRelease.raw)} as PlainManifest);
+        newPackageManifests.push({url: manifestUrl.raw.replace(manifestUrl.semVer.raw, latestRelease.raw)} as PlainManifest);
       } else {
         this.log('no newer manifest release found');
       }
     }
+
+    packageManifest.manifests = newPackageManifests;
 
     if (packageManifest.helm) {
       this.log(`found Helm release of chart ${packageManifest.helm.chartName} with version ${packageManifest.helm.chartVersion}`);
@@ -74,7 +69,7 @@ export default class Package extends Command {
           this.log(`new release on Artifact Hub: ${latestChartVersion}`);
           newAppVersion = new SemVer(latestChart.appVersion!);
           newPackageManifestAvailable = true;
-          mapArtifactHubDataToPackage(newPackageManifest, latestChart);
+          updateHelmManifest(packageManifest, latestChart);
         } else {
           this.log('no newer chart release found');
         }
@@ -83,7 +78,7 @@ export default class Package extends Command {
 
     if (!flags['dry-run'] && (newPackageManifestAvailable || flags.force)) {
       this.log('will create new version');
-      await createNewVersion(newPackageManifest, newAppVersion, flags.source);
+      await createNewVersion(packageManifest, newAppVersion, flags.source);
       this.log('latest version created');
     }
 

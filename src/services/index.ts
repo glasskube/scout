@@ -42,7 +42,7 @@ export async function getNextBuildNumber(appVersion: SemVer, packageName: string
   return await getMatchingVersionsCount(appVersion, packageVersions) + 1;
 }
 
-export function mapArtifactHubDataToPackage(packageData: PackageManifest, artifactHubData: ArtifactHubPackage) {
+export function updateHelmManifest(packageData: PackageManifest, artifactHubData: ArtifactHubPackage) {
   packageData.longDescription = artifactHubData.description;
   packageData.helm = {
     chartName: artifactHubData.name,
