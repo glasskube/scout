@@ -7,13 +7,13 @@ import {PackageIndex} from '../../types/types.js';
 import {getPackageFolders, write} from '../../utils/io/index.js';
 
 export default class Index extends Command {
-  static description = 'updates packages index'
+  static override readonly description = 'updates packages index'
 
-  static examples = [
+  static override readonly examples = [
     '<%= config.bin %> <%= command.id %>',
   ]
 
-  static flags = {
+  static override readonly flags = {
     // flag with no value (-c, --create-version)
     'dry-run': Flags.boolean({description: 'do not make any changes'}),
     // flag to determine the base folder

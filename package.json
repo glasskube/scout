@@ -44,17 +44,7 @@
   "oclif": {
     "bin": "scout",
     "dirname": "scout",
-    "commands": "./dist/commands",
-    "plugins": [
-      "@oclif/plugin-help",
-      "@oclif/plugin-plugins"
-    ],
-    "topicSeparator": " ",
-    "topics": {
-      "hello": {
-        "description": "Say hello to the world and others"
-      }
-    }
+    "commands": "./dist/commands"
   },
   "repository": "glasskube/scout",
   "scripts": {

@@ -14,17 +14,17 @@ import {PackageManifest} from '../../types/types.js';
 import {parseArtifactHubReference, parseManifestUrl} from '../../utils/mapper/index.js';
 
 export default class Package extends Command {
-  static args = {
+  static override readonly args = {
     package: Args.string({description: 'package to scout', required: true}),
   }
 
-  static description = 'describe the command here'
+  static override readonly description = 'describe the command here'
 
-  static examples = [
+  static override readonly examples = [
     '<%= config.bin %> <%= command.id %>',
   ]
 
-  static flags = {
+  static override readonly flags = {
     // flag with no value (-c, --create-version)
     'dry-run': Flags.boolean({description: 'do not make any changes'}),
     // flag with no value (-f, --force)
