@@ -54,7 +54,7 @@
     "posttest": "npm run lint",
     "prepack": "npm run build && oclif manifest && oclif readme",
     "prepare": "npm run build",
-    "test": "mocha --forbid-only \"src/**/*.test.ts\"",
+    "test": "mocha --forbid-only \"src/**/*.spec.ts\"",
     "version": "oclif readme && git add README.md",
     "generate:types:artifacthub": "wget https://raw.githubusercontent.com/artifacthub/hub/master/web/src/types.ts -O 'src/types/artifacthub/index.ts' && wget https://raw.githubusercontent.com/artifacthub/hub/master/web/src/jsonschema.ts -O 'src/types/artifacthub/jsonschema.d.ts'",
     "generate:types:glasskube": "curl https://glasskube.dev/schemas/v1/package-manifest.json | json2ts > src/types/glasskube/package-manifest.d.ts && curl https://glasskube.dev/schemas/v1/index.json | json2ts > src/types/glasskube/index.d.ts && curl https://glasskube.dev/schemas/v1/versions.json | json2ts > src/types/glasskube/versions.d.ts",
