@@ -1,10 +1,10 @@
 import {Command, Flags} from '@oclif/core'
 import * as YAML from 'yaml';
 
-import {getLatestManifest, getLatestVersion} from '../../services/index.js';
+import {buildPath, getLatestManifest, getLatestVersion} from '../../services/index.js';
 import {PackageRepoIndexItem} from '../../types/glasskube/index.js';
 import {PackageIndex} from '../../types/types.js';
-import {getPackageFolders, write} from '../../utils/io/index.js';
+import {getFoldersIn, write} from '../../utils/io/index.js';
 
 export default class Index extends Command {
   static override readonly description = 'updates packages index'
@@ -24,8 +24,7 @@ export default class Index extends Command {
     const {flags} = await this.parse(Index);
 
     const {source} = flags;
-    const basePath = `${source}packages`;
-    const packageFolders = await getPackageFolders(basePath);
+    const packageFolders = await getFoldersIn(buildPath('packages', source));
 
     const index = {
       packages: await Promise.all(packageFolders.map(it => this.createPackageIndexItem(it, source)))
@@ -33,7 +32,7 @@ export default class Index extends Command {
 
     if (!flags['dry-run']) {
       this.log('will rewrite index');
-      await write(`${basePath}/index.yaml`, YAML.stringify(index));
+      await write(buildPath('index.yaml', source), YAML.stringify(index));
       this.log('index rewritten');
     }
   }

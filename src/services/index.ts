@@ -1,10 +1,9 @@
 import {SemVer} from 'semver';
 import * as YAML from 'yaml';
-
-import {HelmManifest} from '../types/glasskube/package-manifest.js';
 import {PackageIndexItem} from '../types/glasskube/versions.js';
 import {ArtifactHubPackage, PackageManifest, PackageVersions} from '../types/types.js';
 import {createDir, parseYaml, read, write} from '../utils/io/index.js';
+import * as path from 'node:path';
 
 export async function createNewVersion(packageManifest: PackageManifest, latestAppVersion: SemVer, source?: string) {
   const packageName = packageManifest.name;
@@ -46,10 +45,10 @@ export function updateHelmManifest(packageData: PackageManifest, artifactHubData
   packageData.longDescription = artifactHubData.description;
   packageData.helm = {
     chartName: artifactHubData.name,
-    chartVersion: artifactHubData.version,
+    chartVersion: artifactHubData.version ?? "0.0.0",
     repositoryUrl: artifactHubData.repository.url,
     values: packageData.helm?.values
-  } as HelmManifest;
+  };
 }
 
 export async function getLatestVersion(name: string, source?: string) {
@@ -61,4 +60,8 @@ export async function getLatestManifest(name: string, source?: string) {
   const latestVersion = await getLatestVersion(name, source);
   const stringContent = await read(`${source}packages/${name}/${latestVersion.raw}/package.yaml`);
   return parseYaml<PackageManifest>(stringContent);
+}
+
+export function buildPath(pathToAdd: string, source?: string) {
+  return source ? path.join(source, pathToAdd) : pathToAdd;
 }

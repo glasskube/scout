@@ -17,7 +17,7 @@ export async function parseYaml<Type>(yamlContent: string) {
   return YAML.parse(yamlContent) as Type;
 }
 
-export async function getPackageFolders(path: string) {
-  const allFiles = await fs.readdir(path);
-  return allFiles.filter(it => it !== 'index.yaml').filter(it => it !== 'schema.json');
+export async function getFoldersIn(path: string) {
+  const allFiles = await fs.readdir(path, {withFileTypes: true});
+  return allFiles.filter(it => it.isDirectory()).map(it => it.name);
 }
