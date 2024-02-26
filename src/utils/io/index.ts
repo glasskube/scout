@@ -1,7 +1,6 @@
 import fs from 'node:fs/promises';
 import * as YAML from 'yaml';
 
-
 export async function createDir(folderPath: string) {
   await fs.mkdir(folderPath);
 }

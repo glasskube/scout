@@ -6,10 +6,8 @@ import {PackageIndexItem} from '../types/glasskube/versions.js';
 import {ArtifactHubPackage, PackageManifest, PackageVersions} from '../types/types.js';
 import {createDir, parseYaml, read, write} from '../utils/io/index.js';
 
-
 export async function createNewVersion(packageManifest: PackageManifest, latestAppVersion: SemVer, source?: string) {
   const packageName = packageManifest.name;
-
 
   const buildNumber = await getNextBuildNumber(latestAppVersion, packageName, source)
   const version = `v${latestAppVersion}+${buildNumber}`;

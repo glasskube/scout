@@ -6,7 +6,6 @@ import {PackageRepoIndexItem} from '../../types/glasskube/index.js';
 import {PackageIndex} from '../../types/types.js';
 import {getPackageFolders, write} from '../../utils/io/index.js';
 
-
 export default class Index extends Command {
   static description = 'updates packages index'
 

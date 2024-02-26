@@ -1,3 +1,7 @@
 {
-  "extends": ["oclif", "oclif-typescript", "prettier"]
+  "root": true,
+  "extends": ["oclif", "oclif-typescript", "prettier"],
+  "rules": {
+    "no-multiple-empty-lines": "error"
+  }
 }

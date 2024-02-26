@@ -3,7 +3,6 @@ import {SemVer} from 'semver';
 
 import {ManifestUrl} from '../../models/manifest-url.js';
 
-
 const oktokit = new Octokit();
 
 export async function getLatestRelease(manifest: ManifestUrl): Promise<SemVer> {

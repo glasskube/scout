@@ -12,7 +12,6 @@ export function parseManifestUrl(manifestUrl: string): ManifestUrl {
   throw new Error(`Could not parse manifest version from url "${manifestUrl}"`);
 }
 
-
 const ARTIFACTHUB_URL_REGEX = /^https:\/\/artifacthub.io\/packages\/helm\/(?<owner>[\da-z-]+)\/(?<repo>[\da-z-]+)/
 
 export function parseArtifactHubReference(referenceUrl: string): ArtifactHubReference {

@@ -3,6 +3,7 @@ import {SemVer} from 'semver';
 export class ManifestUrl {
   readonly semVer: SemVer;
 
+  // eslint-disable-next-line  max-params
   constructor(
     readonly raw: string,
     readonly owner: string,
@@ -12,5 +13,5 @@ export class ManifestUrl {
   ) {
     this.semVer = new SemVer(version);
   }
-  // eslint-disable-next-line  max-params
+
 }

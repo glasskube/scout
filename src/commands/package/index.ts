@@ -13,7 +13,6 @@ import {PackageReference, PlainManifest} from '../../types/glasskube/package-man
 import {ArtifactHubPackage, PackageManifest} from '../../types/types.js';
 import {parseArtifactHubReference, parseManifestUrl} from '../../utils/mapper/index.js';
 
-
 export default class Package extends Command {
   static args = {
     package: Args.string({description: 'package to scout', required: true}),
@@ -47,7 +46,7 @@ export default class Package extends Command {
     let newPackageManifestAvailable = false;
     let newAppVersion = await getLatestVersion(args.package, flags.source)
 
-    for await (const plainManifest of packageManifest.manifests || []) {
+    for await (const plainManifest of packageManifest.manifests ?? []) {
       const manifestUrl = parseManifestUrl(plainManifest.url);
       this.log(`found manifest ${manifestUrl.path} in ${manifestUrl.owner}/${manifestUrl.repo} with version ${manifestUrl.semVer}`);
       const latestRelease = await getLatestRelease(manifestUrl);
@@ -57,10 +56,9 @@ export default class Package extends Command {
         this.log(`new release on GitHub: ${latestRelease}`);
         newPackageManifest.manifests.push({url: manifestUrl.raw.replace(manifestUrl.semVer.raw, latestRelease.raw)} as PlainManifest);
       } else {
-        this.log('no newer manifest release found')
+        this.log('no newer manifest release found');
       }
     }
-
 
     let latestChart: ArtifactHubPackage | undefined;
 
@@ -80,7 +78,7 @@ export default class Package extends Command {
           newPackageManifestAvailable = true;
           mapArtifactHubDataToPackage(newPackageManifest, latestChart);
         } else {
-          this.log('no newer chart release found')
+          this.log('no newer chart release found');
         }
       }
     }
@@ -96,6 +94,5 @@ export default class Package extends Command {
   private findArtifactHubReference(references: PackageReference[]): PackageReference | undefined {
     return references.find(it => it.label === 'ArtifactHub')
   }
-
 
 }

@@ -1,4 +1,5 @@
 import {parseArtifactHubReference, parseManifestUrl} from './index.js';
+
 import assert = require('assert');
 
 describe('utils/manifest/parse', () => {
