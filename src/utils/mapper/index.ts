@@ -3,7 +3,7 @@ import {ManifestUrl} from '../../models/manifest-url.js';
 
 const MANIFEST_REGEX = /^https:\/\/raw.githubusercontent.com\/(?<owner>[\da-z-]+)\/(?<repo>[\da-z-]+)\/(?<version>[\d.a-z-]+)(?<path>\/.*)/
 
-export function parse(manifestUrl: string): ManifestUrl {
+export function parseManifestUrl(manifestUrl: string): ManifestUrl {
   if (MANIFEST_REGEX.test(manifestUrl)) {
     const group = MANIFEST_REGEX.exec(manifestUrl)?.groups ?? {};
     return new ManifestUrl(manifestUrl, group.owner, group.repo, group.version, group.path);

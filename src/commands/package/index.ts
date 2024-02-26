@@ -11,7 +11,7 @@ import {
 } from '../../services/index.js';
 import {PackageReference, PlainManifest} from '../../types/glasskube/package-manifest.js';
 import {ArtifactHubPackage, PackageManifest} from '../../types/types.js';
-import {parse, parseArtifactHubReference} from '../../utils/mapper/index.js';
+import {parseArtifactHubReference, parseManifestUrl} from '../../utils/mapper/index.js';
 
 
 export default class Package extends Command {
@@ -48,7 +48,7 @@ export default class Package extends Command {
     let newAppVersion = await getLatestVersion(args.package, flags.source)
 
     for await (const plainManifest of packageManifest.manifests || []) {
-      const manifestUrl = parse(plainManifest.url);
+      const manifestUrl = parseManifestUrl(plainManifest.url);
       this.log(`found manifest ${manifestUrl.path} in ${manifestUrl.owner}/${manifestUrl.repo} with version ${manifestUrl.semVer}`);
       const latestRelease = await getLatestRelease(manifestUrl);
       if (latestRelease.compare(manifestUrl.semVer)) {

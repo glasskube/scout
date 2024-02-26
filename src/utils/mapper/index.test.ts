@@ -1,17 +1,16 @@
-import {parse, parseArtifactHubReference} from './index.js';
-
+import {parseArtifactHubReference, parseManifestUrl} from './index.js';
 import assert = require('assert');
 
 describe('utils/manifest/parse', () => {
   it('should parse version from GitHub release manifest url', () => {
-    const manifest = parse("https://raw.githubusercontent.com/username/repository/v0.0.1-alpha.10/path/to/file.yaml");
+    const manifest = parseManifestUrl("https://raw.githubusercontent.com/username/repository/v0.0.1-alpha.10/path/to/file.yaml");
     assert.equal(manifest.owner, "username");
     assert.equal(manifest.repo, "repository");
     assert.equal(manifest.semVer.raw, "v0.0.1-alpha.10");
     assert.equal(manifest.path, "/path/to/file.yaml");
   });
   it('should parse actual cyclops manifest url', () => {
-    const manifest = parse("https://raw.githubusercontent.com/cyclops-ui/cyclops/v0.0.1-alpha.10/install/cyclops-install.yaml");
+    const manifest = parseManifestUrl("https://raw.githubusercontent.com/cyclops-ui/cyclops/v0.0.1-alpha.10/install/cyclops-install.yaml");
     assert.equal(manifest.owner, "cyclops-ui");
     assert.equal(manifest.repo, "cyclops");
     assert.equal(manifest.semVer.raw, "v0.0.1-alpha.10");
