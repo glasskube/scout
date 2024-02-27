@@ -6,11 +6,11 @@ export async function createDir(folderPath: string) {
 }
 
 export async function read(filePath: string) {
-  return await fs.readFile(filePath, {encoding: 'utf8'});
+  return fs.readFile(filePath, {encoding: 'utf8'});
 }
 
 export async function write(filePath: string, data: string) {
-  return await fs.writeFile(filePath, data);
+  return fs.writeFile(filePath, data);
 }
 
 export async function parseYaml<Type>(yamlContent: string) {
