@@ -10,12 +10,11 @@ export async function getPackageVersions(packageName: string, source?: string) {
 
 export async function getBuildNumbers(version: SemVer, versions: PackageVersions) {
   return versions.versions
-    .filter(it => version.compare(it.version) === 0)
-    .map(it => Number(new SemVer(it.version).build ?? 1))
+    .filter((it) => version.compare(it.version) === 0)
+    .map((it) => Number(new SemVer(it.version).build ?? 1));
 }
 
 export async function getNextBuildNumber(appVersion: SemVer, packageName: string, source?: string) {
   const packageVersions = await getPackageVersions(packageName, source);
-  return Math.max(0, ...await getBuildNumbers(appVersion, packageVersions)) + 1;
+  return Math.max(0, ...(await getBuildNumbers(appVersion, packageVersions))) + 1;
 }
-

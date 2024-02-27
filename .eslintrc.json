@@ -8,7 +8,11 @@
   ],
   "rules": {
     "no-multiple-empty-lines": "error",
-    "no-return-await": "off"
+    "no-return-await": "off",
+    "semi": [
+      "error",
+      "always"
+    ]
   },
   "overrides": [
     {

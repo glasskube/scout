@@ -1,6 +1,8 @@
-import { JSONSchema } from './jsonschema.js';
+import {JSONSchema} from './jsonschema.js';
 
-declare namespace JSX { export type Element = never; }
+declare namespace JSX {
+  export type Element = never;
+}
 
 export enum RepositoryKind {
   Helm = 0,
@@ -154,7 +156,7 @@ export interface Package {
   provider?: string | null;
   containersImages?: ContainerImage[] | null;
   capabilities?: string | null;
-  crds?: { [key: string]: any } | null;
+  crds?: {[key: string]: any} | null;
   crdsExamples?: CustomResourcesDefinitionExample[] | null;
   securityReportSummary?: SecurityReportSummary | null;
   securityReportCreatedAt?: number;
@@ -243,8 +245,8 @@ export interface RecommendedPackage {
 
 export interface PackageData {
   policies?: Policies;
-  examples?: GatekeeperExample[] | { [key: string]: string };
-  rules?: { Raw: string; Name: string }[] | FalcoRules;
+  examples?: GatekeeperExample[] | {[key: string]: string};
+  rules?: {Raw: string; Name: string}[] | FalcoRules;
   dependencies?: Dependency[];
   customResourcesDefinitionsExamples?: string;
   customResourcesDefinitions?: CustomResourcesDefinition[];
@@ -636,7 +638,7 @@ export type SecurityReportSummary = {
 };
 
 export interface SecurityReport {
-  [key: string]: { Results: SecurityReportResult[] };
+  [key: string]: {Results: SecurityReportResult[]};
 }
 
 export interface SecurityReportResult {
@@ -652,7 +654,7 @@ export interface Vulnerability {
 
 export interface FixableVulnerabilitiesInReport {
   report: {
-    [key: string]: { summary: SecurityReportSummary; total: number };
+    [key: string]: {summary: SecurityReportSummary; total: number};
   };
   summary: SecurityReportSummary;
   total: number;

@@ -25,6 +25,7 @@
     "json-schema-to-typescript": "^13.1.2",
     "mocha": "^10",
     "oclif": "^4.4.2",
+    "prettier": "3.2.5",
     "shx": "^0.3.4",
     "tsx": "4.7.1",
     "typescript": "^5"
@@ -48,6 +49,8 @@
   },
   "repository": "glasskube/scout",
   "scripts": {
+    "prettier:check": "prettier -c src/**",
+    "prettier:write": "prettier -w src/**",
     "lint": "eslint . --ext .js,.ts",
     "test": "mocha --forbid-only 'src/**/*.spec.ts'",
     "posttest": "npm run lint",

@@ -10,8 +10,8 @@ describe('datasources/github', () => {
       path: '',
       raw: '',
       repo: 'glasskube',
-      semVer: new SemVer("0.0.2")
+      semVer: new SemVer('0.0.2'),
     });
-    assert.equal(version.version, new SemVer("0.0.2").version);
-  })
-})
+    assert.equal(version.version, new SemVer('0.0.2').version);
+  });
+});

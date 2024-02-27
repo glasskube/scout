@@ -3,7 +3,5 @@ export class ArtifactHubReference {
     readonly raw: string,
     readonly owner: string,
     readonly repo: string,
-  ) {
-  }
+  ) {}
 }
-

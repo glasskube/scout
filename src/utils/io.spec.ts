@@ -5,8 +5,7 @@ import {parseYaml} from './io.js';
 
 describe('utils/package', () => {
   it('should parse the package yaml correctly', async () => {
-    const input =
-      `
+    const input = `
 # yaml-language-server: $schema=../schema.json
 name: test-package
 shortDescription: Glasskube CI Test package
@@ -25,9 +24,9 @@ entrypoints:
   - serviceName: example
     port: 8080
     name: test
-            `
+            `;
 
     const manifest = await parseYaml<PackageManifest>(input);
-    assert.equal(manifest.name, "test-package");
-  })
-})
+    assert.equal(manifest.name, 'test-package');
+  });
+});

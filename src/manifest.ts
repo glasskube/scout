@@ -6,19 +6,27 @@ import {PackageIndexItem} from './types/glasskube/versions.js';
 import {ArtifactHubPackage, PackageManifest} from './types/types.js';
 import {createDir, parseYaml, read, write} from './utils/io.js';
 
-export async function createNewManifestVersion(packageManifest: PackageManifest, latestAppVersion: SemVer, source?: string) {
+export async function createNewManifestVersion(
+  packageManifest: PackageManifest,
+  latestAppVersion: SemVer,
+  source?: string,
+) {
   const packageName = packageManifest.name;
 
-  const buildNumber = await getNextBuildNumber(latestAppVersion, packageName, source)
+  const buildNumber = await getNextBuildNumber(latestAppVersion, packageName, source);
   const version = `v${latestAppVersion}+${buildNumber}`;
   const latestVersionPath = `${source}packages/${packageName}/${version}`;
   await writePackageManifestFile(latestVersionPath, packageManifest);
-  await updateVersionsFile(packageName, version, source)
+  await updateVersionsFile(packageName, version, source);
 }
 
 async function writePackageManifestFile(latestVersionPath: string, packageManifest: PackageManifest) {
   await createDir(latestVersionPath);
-  await write(`${latestVersionPath}/package.yaml`, '# yaml-language-server: $schema=https://glasskube.dev/schemas/v1/package-manifest.json\n\n' + YAML.stringify(packageManifest));
+  await write(
+    `${latestVersionPath}/package.yaml`,
+    '# yaml-language-server: $schema=https://glasskube.dev/schemas/v1/package-manifest.json\n\n' +
+      YAML.stringify(packageManifest),
+  );
 }
 
 async function updateVersionsFile(packageName: string, version: string, source?: string) {
@@ -42,9 +50,8 @@ export function updateHelmManifest(packageData: PackageManifest, artifactHubData
   packageData.longDescription = artifactHubData.description;
   packageData.helm = {
     chartName: artifactHubData.name,
-    chartVersion: artifactHubData.version ?? "0.0.0",
+    chartVersion: artifactHubData.version ?? '0.0.0',
     repositoryUrl: artifactHubData.repository.url,
-    values: packageData.helm?.values
+    values: packageData.helm?.values,
   };
 }
-
