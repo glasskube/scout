@@ -32,13 +32,15 @@ export async function getVersions(packageName: string, source?: string) {
   return parseYaml<PackageVersions>(versionsContent);
 }
 
-export async function getMatchingVersionsCount(version: SemVer, versions: PackageVersions) {
-  return versions.versions.filter(it => version.compare(it.version) === 0).length
+export async function getBuildNumbers(version: SemVer, versions: PackageVersions) {
+  return versions.versions
+    .filter(it => version.compare(it.version) === 0)
+    .map(it => Number(new SemVer(it.version).build ?? 1))
 }
 
 export async function getNextBuildNumber(appVersion: SemVer, packageName: string, source?: string) {
   const packageVersions = await getVersions(packageName, source);
-  return await getMatchingVersionsCount(appVersion, packageVersions) + 1;
+  return Math.max(0, ... await getBuildNumbers(appVersion, packageVersions)) + 1;
 }
 
 export function updateHelmManifest(packageData: PackageManifest, artifactHubData: ArtifactHubPackage) {
