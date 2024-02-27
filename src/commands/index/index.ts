@@ -1,10 +1,11 @@
 import {Command, Flags} from '@oclif/core'
 import * as YAML from 'yaml';
 
-import {buildPath, getLatestManifest, getLatestVersion} from '../../services/index.js';
+import {getLatestManifest, getLatestVersion} from '../../manifest.js';
 import {PackageRepoIndexItem} from '../../types/glasskube/index.js';
 import {PackageIndex} from '../../types/types.js';
-import {getFoldersIn, write} from '../../utils/io/index.js';
+import {getFoldersIn, write} from '../../utils/io.js';
+import {buildPath} from '../../utils/path.js';
 
 export default class Index extends Command {
   static override readonly aliases = ['update:index'];

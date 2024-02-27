@@ -1,7 +1,7 @@
 import {SemVer} from 'semver';
 
-import {PackageVersions} from '../types/types.js';
-import {getBuildNumbers} from './index.js';
+import {getBuildNumbers} from './package.js';
+import {PackageVersions} from './types/types.js';
 
 import assert = require('assert');
 

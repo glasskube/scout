@@ -1,4 +1,4 @@
-import {parseArtifactHubReference, parseManifestUrl} from './index.js';
+import {parseArtifactHubReferenceUrl, parseManifestUrl} from './url-parser.js';
 
 import assert = require('assert');
 
@@ -21,7 +21,7 @@ describe('utils/manifest/parse', () => {
 
 describe('utils/manifest/parseArtifactHubReference', () => {
   it('should parse Artifact Hub data url', () => {
-    const artifactHub = parseArtifactHubReference("https://artifacthub.io/packages/helm/cert-manager/cert-manager");
+    const artifactHub = parseArtifactHubReferenceUrl("https://artifacthub.io/packages/helm/cert-manager/cert-manager");
     assert.equal(artifactHub.owner, "cert-manager");
     assert.equal(artifactHub.repo, "cert-manager");
   });

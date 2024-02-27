@@ -1,5 +1,5 @@
-import {PackageManifest} from '../../types/types.js';
-import {parseYaml} from './index.js';
+import {PackageManifest} from '../types/types.js';
+import {parseYaml} from './io.js';
 
 import assert = require('assert');
 

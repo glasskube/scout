@@ -3,9 +3,9 @@ import {SemVer} from 'semver';
 
 import {getArtifactPackage} from '../../datasources/artifacthub/index.js';
 import {getLatestRelease} from '../../datasources/github-release/index.js';
-import {createNewVersion, getLatestManifest, getLatestVersion, updateHelmManifest} from '../../services/index.js';
+import {createNewManifestVersion, getLatestManifest, getLatestVersion, updateHelmManifest} from '../../manifest.js';
 import {PackageReference, PlainManifest} from '../../types/glasskube/package-manifest.js';
-import {parseArtifactHubReference, parseManifestUrl} from '../../utils/mapper/index.js';
+import {parseArtifactHubReferenceUrl, parseManifestUrl} from '../../utils/url-parser.js';
 
 export default class Package extends Command {
   static override readonly aliases = ['update:package'];
@@ -68,7 +68,7 @@ export default class Package extends Command {
       const artifactHubUrl = this.findArtifactHubReference(packageManifest.references || [])
 
       if (artifactHubUrl) {
-        const artifactHub = parseArtifactHubReference(artifactHubUrl.url);
+        const artifactHub = parseArtifactHubReferenceUrl(artifactHubUrl.url);
         const latestChart = await getArtifactPackage(artifactHub);
         const latestChartVersion = new SemVer(latestChart.version!);
 
@@ -85,7 +85,7 @@ export default class Package extends Command {
 
     if (!flags['dry-run'] && (newPackageManifestAvailable || flags.force)) {
       this.log('will create new version');
-      await createNewVersion(packageManifest, newAppVersion, flags.source);
+      await createNewManifestVersion(packageManifest, newAppVersion, flags.source);
       this.log('latest version created');
     }
 
