@@ -14,7 +14,6 @@ export async function createNewVersion(packageManifest: PackageManifest, latestA
   const latestVersionPath = `${source}packages/${packageName}/${version}`;
   await writePackageManifestFile(latestVersionPath, packageManifest);
   await updateVersionsFile(packageName, version, source)
-
 }
 
 async function writePackageManifestFile(latestVersionPath: string, packageManifest: PackageManifest) {
