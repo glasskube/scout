@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "type": "node",
+          "request": "launch",
+          "name": "scout index",
+          "runtimeArgs": [
+            "--import",
+            "tsx/esm"
+          ],
+          "skipFiles": [
+              "<node_internals>/**"
+          ],
+          "program": "${workspaceFolder}/bin/dev.ts",
+          "args": [
+            "index"
+          ]
+      }
+  ]
+}
