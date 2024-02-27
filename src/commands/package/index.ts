@@ -45,6 +45,11 @@ export default class Package extends Command {
       const manifestUrl = parseManifestUrl(plainManifest.url);
       this.log(`found manifest ${manifestUrl.path} in ${manifestUrl.owner}/${manifestUrl.repo} with version ${manifestUrl.semVer}`);
       const latestRelease = await getLatestRelease(manifestUrl);
+
+      if (newPackageManifestAvailable && latestRelease.compare(newAppVersion) !== 0) {
+        this.error('found different manifest version - appVersion resolution needed', {exit: 1});
+      }
+
       if (latestRelease.compare(manifestUrl.semVer)) {
         newAppVersion = latestRelease;
         newPackageManifestAvailable = true;
