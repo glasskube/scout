@@ -1,7 +1,53 @@
 {
+  "name": "@glasskube/scout",
+  "description": "Glasskube package update util",
   "author": "Philip Miglinci",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/glasskube/scout",
+  "bugs": "https://github.com/glasskube/scout/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glasskube/scout.git"
+  },
+  "keywords": [
+    "oclif",
+    "glasskube",
+    "scout",
+    "kubernetes"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "type": "module",
+  "main": "",
+  "types": "dist/index.d.ts",
+  "exports": "./lib/index.js",
+  "files": [
+    "/bin",
+    "/dist",
+    "/oclif.manifest.json"
+  ],
+  "oclif": {
+    "bin": "scout",
+    "dirname": "scout",
+    "commands": "./dist/commands"
+  },
   "bin": {
     "scout": "./bin/run.js"
+  },
+  "scripts": {
+    "prettier:check": "prettier -c src/**",
+    "prettier:write": "prettier -w src/**",
+    "lint": "eslint . --ext .js,.ts",
+    "test": "mocha --forbid-only 'src/**/*.spec.ts'",
+    "posttest": "npm run lint",
+    "build": "shx rm -rf dist && tsc -b",
+    "prepack": "npm run build && oclif manifest && oclif readme",
+    "postpack": "shx rm -f oclif.manifest.json",
+    "prepare": "npm run build",
+    "generate:types:artifacthub": "scripts/generate_artifacthub_types.sh",
+    "generate:types:glasskube": "scripts/generate_glasskube_types.sh"
   },
   "dependencies": {
     "@oclif/core": "^3",
@@ -10,7 +56,6 @@
     "semver": "^7.6.0",
     "yaml": "^2.3.4"
   },
-  "description": "Glasskube package update util",
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
     "@oclif/test": "^3",
@@ -33,43 +78,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "files": [
-    "/bin",
-    "/dist",
-    "/oclif.manifest.json"
-  ],
-  "homepage": "https://github.com/glasskube/scout",
-  "license": "Apache-2.0",
-  "main": "",
-  "name": "@glasskube/scout",
-  "oclif": {
-    "bin": "scout",
-    "dirname": "scout",
-    "commands": "./dist/commands"
-  },
-  "repository": "glasskube/scout",
-  "scripts": {
-    "prettier:check": "prettier -c src/**",
-    "prettier:write": "prettier -w src/**",
-    "lint": "eslint . --ext .js,.ts",
-    "test": "mocha --forbid-only 'src/**/*.spec.ts'",
-    "posttest": "npm run lint",
-    "build": "shx rm -rf dist && tsc -b",
-    "prepack": "npm run build && oclif manifest && oclif readme",
-    "postpack": "shx rm -f oclif.manifest.json",
-    "prepare": "npm run build",
-    "generate:types:artifacthub": "scripts/generate_artifacthub_types.sh",
-    "generate:types:glasskube": "scripts/generate_glasskube_types.sh"
-  },
-  "version": "0.0.0",
-  "bugs": "https://github.com/glasskube/scout/issues",
-  "keywords": [
-    "oclif",
-    "glasskube",
-    "scout",
-    "kubernetes"
-  ],
-  "types": "dist/index.d.ts",
-  "exports": "./lib/index.js",
-  "type": "module"
+  "volta": {
+    "node": "20.11.1"
+  }
 }
