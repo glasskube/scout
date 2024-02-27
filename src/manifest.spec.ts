@@ -1,9 +1,8 @@
+import * as assert  from 'node:assert';
 import {SemVer} from 'semver';
 
 import {getBuildNumbers} from './package.js';
 import {PackageVersions} from './types/types.js';
-
-import assert = require('assert');
 
 describe('services', () => {
   it('count versions correctly', async () => {

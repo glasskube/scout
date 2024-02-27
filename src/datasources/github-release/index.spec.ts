@@ -1,8 +1,7 @@
+import * as assert from 'node:assert';
 import {SemVer} from 'semver';
 
 import {getLatestRelease} from './index.js';
-
-import assert = require('assert');
 
 describe('datasources/github', () => {
   it('should download latest tag from GitHub', async () => {

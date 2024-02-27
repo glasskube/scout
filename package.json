@@ -26,7 +26,7 @@
     "mocha": "^10",
     "oclif": "^4.4.2",
     "shx": "^0.3.4",
-    "ts-node": "^10.9.2",
+    "tsx": "4.7.1",
     "typescript": "^5"
   },
   "engines": {
@@ -48,13 +48,13 @@
   },
   "repository": "glasskube/scout",
   "scripts": {
-    "build": "shx rm -rf dist && tsc -b",
-    "lint": "eslint . --ext .ts",
-    "postpack": "shx rm -f oclif.manifest.json",
+    "lint": "eslint . --ext .js,.ts",
+    "test": "mocha --forbid-only 'src/**/*.spec.ts'",
     "posttest": "npm run lint",
+    "build": "shx rm -rf dist && tsc -b",
     "prepack": "npm run build && oclif manifest && oclif readme",
+    "postpack": "shx rm -f oclif.manifest.json",
     "prepare": "npm run build",
-    "test": "mocha --forbid-only \"src/**/*.spec.ts\"",
     "generate:types:artifacthub": "scripts/generate_artifacthub_types.sh",
     "generate:types:glasskube": "scripts/generate_glasskube_types.sh"
   },

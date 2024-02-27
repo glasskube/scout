@@ -1,7 +1,7 @@
+import * as assert from 'node:assert';
+
 import {PackageManifest} from '../types/types.js';
 import {parseYaml} from './io.js';
-
-import assert = require('assert');
 
 describe('utils/package', () => {
   it('should parse the package yaml correctly', async () => {

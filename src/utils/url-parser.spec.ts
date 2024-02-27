@@ -1,6 +1,6 @@
-import {parseArtifactHubReferenceUrl, parseManifestUrl} from './url-parser.js';
+import * as assert from 'node:assert';
 
-import assert = require('assert');
+import {parseArtifactHubReferenceUrl, parseManifestUrl} from './url-parser.js';
 
 describe('utils/manifest/parse', () => {
   it('should parse version from GitHub release manifest url', () => {

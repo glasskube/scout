@@ -1,7 +1,23 @@
 {
+  "$schema": "https://github.com/SchemaStore/schemastore/raw/master/src/schemas/json/eslintrc.json",
   "root": true,
-  "extends": ["oclif", "oclif-typescript", "prettier"],
+  "extends": [
+    "oclif",
+    "oclif-typescript",
+    "prettier"
+  ],
   "rules": {
-    "no-multiple-empty-lines": "error"
-  }
+    "no-multiple-empty-lines": "error",
+    "no-return-await": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "rules": {
+        "node/shebang": "off"
+      }
+    }
+  ]
 }

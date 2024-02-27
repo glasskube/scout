@@ -1,7 +1,7 @@
+import * as assert from 'node:assert';
+
 import {ArtifactHubReference} from '../../models/artifact-hub-reference.js';
 import {getArtifactPackage} from './index.js';
-
-import assert = require('node:assert');
 
 describe('datasources/artifacthub', () => {
   it('should download latest package from artifacthub', async () => {
