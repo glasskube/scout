@@ -1,4 +1,6 @@
-import {JSONSchema} from './jsonschema.js';
+import { JSONSchema } from './jsonschema.js';
+
+declare namespace JSX { export type Element = never; }
 
 export enum RepositoryKind {
   Helm = 0,
@@ -350,6 +352,11 @@ export interface FacetOption {
   filterKey?: string;
 }
 
+export interface Option extends FacetOption {
+  filterKey: string;
+  icon?: JSX.Element;
+}
+
 export interface UserLogin {
   email: string;
   password: string;
@@ -519,6 +526,21 @@ export enum PayloadKind {
   custom,
 }
 
+export interface Section {
+  name: string;
+  displayName: string;
+  shortName?: string;
+  disabled: boolean;
+  onlyDesktop?: boolean;
+  icon?: JSX.Element;
+  subsections?: Section[];
+}
+
+export interface NavSection {
+  user: Section[];
+  org: Section[];
+}
+
 export interface APIKey {
   apiKeyId?: string;
   name: string;
@@ -602,6 +624,11 @@ export interface AuthorizationPolicy {
   data: {
     [key: string]: any;
   };
+}
+
+export interface SearchTipItem {
+  content: JSX.Element | string;
+  example: string;
 }
 
 export type SecurityReportSummary = {

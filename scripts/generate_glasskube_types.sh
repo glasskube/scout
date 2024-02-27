@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
-curl https://glasskube.dev/schemas/v1/package-manifest.json | json2ts > src/types/glasskube/package-manifest.d.ts
-curl https://glasskube.dev/schemas/v1/index.json | json2ts > src/types/glasskube/index.d.ts
-curl https://glasskube.dev/schemas/v1/versions.json | json2ts > src/types/glasskube/versions.d.ts
+BASE_URL="https://glasskube.dev/schemas/v1"
+TARGET_DIR="src/types/glasskube"
+for SCHEMA in "package-manifest" "index" "versions"; do
+  OUT="$TARGET_DIR/$SCHEMA.d.ts"
+  echo "update $OUT"
+  curl -sf "$BASE_URL/$SCHEMA.json" | json2ts -o "$OUT"
+done
