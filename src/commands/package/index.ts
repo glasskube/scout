@@ -1,43 +1,44 @@
-import {Args, Command, Flags} from '@oclif/core';
+import {Command, Flags} from '@oclif/core';
+import path from 'node:path';
 import {SemVer} from 'semver';
 
 import {getArtifactPackage} from '../../datasources/artifacthub/index.js';
 import {getLatestRelease} from '../../datasources/github-release/index.js';
 import {createNewManifestVersion, getLatestManifest, getLatestVersion, updateHelmManifest} from '../../manifest.js';
+import {Paths, packagePaths} from '../../paths.js';
 import {PackageReference, PlainManifest} from '../../types/glasskube/package-manifest.js';
 import {parseArtifactHubReferenceUrl, parseManifestUrl} from '../../utils/url-parser.js';
 
 export default class Package extends Command {
   static override readonly aliases = ['update:package'];
-
-  static override readonly args = {
-    package: Args.string({description: 'package to scout', required: true}),
-  };
-
   static override readonly description = 'describe the command here';
-
   static override readonly examples = ['<%= config.bin %> <%= command.id %>'];
-
   static override readonly flags = {
     // flag with no value (-c, --create-version)
     'dry-run': Flags.boolean({description: 'do not make any changes'}),
     // flag with no value (-f, --force)
     force: Flags.boolean({char: 'f'}),
     // flag with a value (-n, --name=VALUE)
-    name: Flags.string({char: 'n', description: 'name to print'}),
+    name: Flags.string({char: 'n', description: 'name to print', required: true}),
     // flag to determine the base folder
-    source: Flags.string({char: 's', description: 'packages context'}),
+    source: Flags.string({char: 's', default: '.', description: 'packages context'}),
   };
 
+  private paths!: Paths;
+
+  protected override async init(): Promise<void> {
+    const {flags} = await this.parse(Package);
+    this.paths = packagePaths(path.join(flags.source, 'packages'));
+  }
+
   public async run(): Promise<void> {
-    const {args, flags} = await this.parse(Package);
-
-    const packageManifest = await getLatestManifest(args.package, flags.source);
-
-    const newPackageManifests = [];
+    const {flags} = await this.parse(Package);
+    const packagePaths = this.paths.package(flags.name);
+    const packageManifest = await getLatestManifest(packagePaths);
+    const newPackageManifests: PlainManifest[] = [];
 
     let newPackageManifestAvailable = false;
-    let newAppVersion = await getLatestVersion(args.package, flags.source);
+    let newAppVersion = await getLatestVersion(packagePaths);
 
     for await (const plainManifest of packageManifest.manifests ?? []) {
       const manifestUrl = parseManifestUrl(plainManifest.url);
@@ -56,20 +57,22 @@ export default class Package extends Command {
         this.log(`new release on GitHub: ${latestRelease}`);
         newPackageManifests.push({
           url: manifestUrl.raw.replace(manifestUrl.semVer.raw, latestRelease.raw),
-        } as PlainManifest);
+        });
       } else {
         this.log('no newer manifest release found');
       }
     }
 
-    packageManifest.manifests = newPackageManifests;
+    if (newPackageManifests.length > 0) {
+      packageManifest.manifests = newPackageManifests;
+    }
 
     if (packageManifest.helm) {
       this.log(
         `found Helm release of chart ${packageManifest.helm.chartName} with version ${packageManifest.helm.chartVersion}`,
       );
 
-      const artifactHubUrl = this.findArtifactHubReference(packageManifest.references || []);
+      const artifactHubUrl = this.findArtifactHubReference(packageManifest.references ?? []);
 
       if (artifactHubUrl) {
         const artifactHub = parseArtifactHubReferenceUrl(artifactHubUrl.url);
@@ -89,12 +92,12 @@ export default class Package extends Command {
 
     if (!flags['dry-run'] && (newPackageManifestAvailable || flags.force)) {
       this.log('will create new version');
-      await createNewManifestVersion(packageManifest, newAppVersion, flags.source);
+      await createNewManifestVersion(packagePaths, packageManifest, newAppVersion);
       this.log('latest version created');
     }
   }
 
   private findArtifactHubReference(references: PackageReference[]): PackageReference | undefined {
-    return references.find((it) => it.label === 'ArtifactHub');
+    return references.find(it => it.label === 'ArtifactHub');
   }
 }

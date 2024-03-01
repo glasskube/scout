@@ -1,6 +1,7 @@
-import oclifPrettierConfig from "@oclif/prettier-config";
+import oclifPrettierConfig from '@oclif/prettier-config';
 
 export default {
   ...oclifPrettierConfig,
-  semi: true
-}
+  semi: true,
+  arrowParens: 'avoid',
+};
