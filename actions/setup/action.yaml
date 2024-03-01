@@ -1,0 +1,21 @@
+name: Setup @glasskube/scout
+description: Install @glasskube/scout globally using npm
+inputs:
+  token:
+    required: true
+    description: GitHub Token for NPM registry
+outputs: {}
+runs:
+  using: "composite"
+  steps:
+    - name: Setup node.js
+      uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
+      with:
+        node-version: "20"
+        registry-url: "https://npm.pkg.github.com"
+        scope: "@glasskube"
+    - name: Install scout
+      shell: sh
+      run: npm install --global @glasskube/scout@0.1.0 # x-release-please-version
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.token }}

@@ -1,0 +1,20 @@
+name: Test actions/setup
+
+on:
+  push:
+    paths:
+      - actions/**
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - name: Setup scout
+        uses: ./actions/setup
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: scout --version
