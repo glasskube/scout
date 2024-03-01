@@ -5,8 +5,8 @@ const MANIFEST_REGEX =
   /^https:\/\/raw.githubusercontent.com\/(?<owner>[\da-z-]+)\/(?<repo>[\da-z-]+)\/(?<version>[\d.a-z-]+)(?<path>\/.*)/;
 
 export function parseManifestUrl(manifestUrl: string): ManifestUrl {
-  if (MANIFEST_REGEX.test(manifestUrl)) {
-    const group = MANIFEST_REGEX.exec(manifestUrl)?.groups ?? {};
+  const group = MANIFEST_REGEX.exec(manifestUrl)?.groups;
+  if (group !== undefined) {
     return new ManifestUrl(manifestUrl, group.owner, group.repo, group.version, group.path);
   }
 
@@ -16,8 +16,8 @@ export function parseManifestUrl(manifestUrl: string): ManifestUrl {
 const ARTIFACT_HUB_URL_REGEX = /^https:\/\/artifacthub.io\/packages\/helm\/(?<owner>[\da-z-]+)\/(?<repo>[\da-z-]+)/;
 
 export function parseArtifactHubReferenceUrl(referenceUrl: string): ArtifactHubReference {
-  if (ARTIFACT_HUB_URL_REGEX.test(referenceUrl)) {
-    const group = ARTIFACT_HUB_URL_REGEX.exec(referenceUrl)?.groups ?? {};
+  const group = ARTIFACT_HUB_URL_REGEX.exec(referenceUrl)?.groups;
+  if (group !== undefined) {
     return new ArtifactHubReference(referenceUrl, group.owner, group.repo);
   }
 

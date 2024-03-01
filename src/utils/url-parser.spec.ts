@@ -2,7 +2,7 @@ import * as assert from 'node:assert';
 
 import {parseArtifactHubReferenceUrl, parseManifestUrl} from './url-parser.js';
 
-describe('utils/manifest/parse', () => {
+describe('utils/manifest/parseManifestUrl', () => {
   it('should parse version from GitHub release manifest url', () => {
     const manifest = parseManifestUrl(
       'https://raw.githubusercontent.com/username/repository/v0.0.1-alpha.10/path/to/file.yaml',
@@ -20,6 +20,11 @@ describe('utils/manifest/parse', () => {
     assert.equal(manifest.repo, 'cyclops');
     assert.equal(manifest.semVer.raw, 'v0.0.1-alpha.10');
     assert.equal(manifest.path, '/install/cyclops-install.yaml');
+  });
+  it('should throw for invalid manifest url', () => {
+    assert.throws(() => {
+      parseManifestUrl('https://raw.githubusercontent.com/kosmoz/malicious/not-a-package/run.exe');
+    });
   });
 });
 
