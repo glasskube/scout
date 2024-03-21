@@ -3,12 +3,11 @@ import {HttpResponse, http} from 'msw';
 import {setupServer} from 'msw/node';
 import {SemVer} from 'semver';
 
+import * as response from '../../../testdata/github.response.json';
 import {getLatestRelease} from './index.js';
 
-const handler = http.get(
-  'https://api.github.com/repos/glasskube/glasskube/releases/latest',
-  // eslint-disable-next-line camelcase
-  () => HttpResponse.json({tag_name: '0.0.2'}),
+const handler = http.get('https://api.github.com/repos/glasskube/glasskube/releases/latest', () =>
+  HttpResponse.json(response),
 );
 
 const server = setupServer(handler);
@@ -23,10 +22,10 @@ describe('datasources/github', () => {
       path: '',
       raw: '',
       repo: 'glasskube',
-      semVer: new SemVer('0.0.2'),
+      semVer: new SemVer('99.99.99'),
     });
 
     expect(handler.isUsed).to.be.true;
-    expect(version.version).to.eq('0.0.2');
+    expect(version.version).to.eq('0.0.4');
   });
 });
