@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.2](https://github.com/glasskube/scout/compare/v0.1.1...v0.1.2) (2024-03-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @oclif/core to v3.23.0 ([b25f613](https://github.com/glasskube/scout/commit/b25f613d419545373576648f36b89855b8339cad))
+* **deps:** update dependency yaml to v2.4.1 ([9a18f12](https://github.com/glasskube/scout/commit/9a18f120bca78dd5536aa11ab318a2ad663c3484))
+
 ## [0.1.1](https://github.com/glasskube/scout/compare/v0.1.0...v0.1.1) (2024-03-04)
 
 
