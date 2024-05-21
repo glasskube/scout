@@ -32,6 +32,23 @@ async function updateVersionsFile(paths: PackagePaths, version: string) {
   await write(paths.versionsYaml(), YAML.stringify(packageVersions));
 }
 
+export async function updateLatestVersion(paths: PackagePaths): Promise<boolean> {
+  const packageVersions = await getPackageVersions(paths);
+  if (packageVersions.versions.length > 0) {
+    const maxVersion = packageVersions.versions
+      .map(it => new SemVer(it.version))
+      .sort((a, b) => a.compare(b) || a.compareBuild(b))[packageVersions.versions.length - 1];
+    const currentLatestVersion = new SemVer(packageVersions.latestVersion);
+    if ((maxVersion.compare(currentLatestVersion) || maxVersion.compareBuild(currentLatestVersion)) > 0) {
+      packageVersions.latestVersion = maxVersion.raw;
+      await write(paths.versionsYaml(), YAML.stringify(packageVersions));
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export async function getLatestVersion(paths: PackagePaths) {
   const packageVersions = await getPackageVersions(paths);
   return new SemVer(packageVersions.latestVersion);
