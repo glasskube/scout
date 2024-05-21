@@ -2,7 +2,7 @@ import {Command, Flags} from '@oclif/core';
 import path from 'node:path';
 import {SemVer} from 'semver';
 
-import {getArtifactPackage} from '../../datasources/artifacthub/index.js';
+import {getArtifactPackage, getArtifactPackageVersion} from '../../datasources/artifacthub/index.js';
 import {getLatestRelease} from '../../datasources/github-release/index.js';
 import {createNewManifestVersion, getLatestManifest, getLatestVersion, updateHelmManifest} from '../../manifest.js';
 import {Paths, packagePaths} from '../../paths.js';
@@ -38,7 +38,8 @@ export default class Package extends Command {
     const newPackageManifests: PlainManifest[] = [];
 
     let newPackageManifestAvailable = false;
-    let newAppVersion = await getLatestVersion(packagePaths);
+    const currentAppVersion = await getLatestVersion(packagePaths);
+    let newAppVersion = currentAppVersion;
 
     for await (const plainManifest of packageManifest.manifests ?? []) {
       const manifestUrl = parseManifestUrl(plainManifest.url);
@@ -68,25 +69,36 @@ export default class Package extends Command {
     }
 
     if (packageManifest.helm) {
-      this.log(
-        `found Helm release of chart ${packageManifest.helm.chartName} with version ${packageManifest.helm.chartVersion}`,
-      );
+      const currentChartVersion = new SemVer(packageManifest.helm.chartVersion).format();
+      this.log(`found Helm release of chart ${packageManifest.helm.chartName} with version ${currentChartVersion}`);
 
       const artifactHubUrl = this.findArtifactHubReference(packageManifest.references ?? []);
 
       if (artifactHubUrl) {
-        const artifactHub = parseArtifactHubReferenceUrl(artifactHubUrl.url);
-        const latestChart = await getArtifactPackage(artifactHub);
+        const reference = parseArtifactHubReferenceUrl(artifactHubUrl.url);
+        const latestChart = await getArtifactPackage(reference);
         const latestChartVersion = new SemVer(latestChart.version!);
+        if (latestChartVersion.compare(new SemVer(packageManifest.helm.chartVersion)) > 0) {
+          this.log(`new release on Artifact Hub: ${latestChartVersion} (old: ${currentChartVersion})`);
+          const currentChart = await getArtifactPackageVersion(reference, currentChartVersion);
+          if (currentAppVersion.compare(new SemVer(currentChart.version!)) === 0) {
+            this.log(`using chart version as package version for ${flags.name}: ${latestChartVersion}`);
+            newAppVersion = latestChartVersion;
+            newPackageManifestAvailable = true;
+          } else if (currentAppVersion.compare(new SemVer(currentChart.appVersion!)) === 0) {
+            this.log(`using app version as package version for ${flags.name}: ${latestChart.appVersion}`);
+            newAppVersion = new SemVer(latestChart.appVersion!);
+            newPackageManifestAvailable = true;
+          } else {
+            this.warn(`can not determine version to use for ${flags.name}`);
+          }
 
-        if (latestChartVersion.compare(new SemVer(packageManifest.helm.chartVersion))) {
-          this.log(`new release on Artifact Hub: ${latestChartVersion}`);
-          newAppVersion = new SemVer(latestChart.appVersion!);
-          newPackageManifestAvailable = true;
           updateHelmManifest(packageManifest, latestChart);
         } else {
           this.log('no newer chart release found');
         }
+      } else {
+        this.warn(`${flags.name} has no ArtifactHub reference`);
       }
     }
 
