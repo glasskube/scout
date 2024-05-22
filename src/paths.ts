@@ -7,7 +7,7 @@ type VersionsYaml = {readonly versionsYaml: StringSupplier};
 type ManifestYaml = {readonly packageYaml: StringSupplier};
 export type PackageVersionPaths = DirName & ManifestYaml;
 type WithPackageVersion = {readonly version: (version: string) => PackageVersionPaths};
-export type PackagePaths = DirName & VersionsYaml & ManifestYaml & WithPackageVersion;
+export type PackagePaths = DirName & ManifestYaml & VersionsYaml & WithPackageVersion;
 type WithPackage = {readonly package: (name: string) => PackagePaths};
 export type Paths = DirName & IndexYaml & WithPackage;
 

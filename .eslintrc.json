@@ -20,7 +20,7 @@
         "*.ts"
       ],
       "rules": {
-        "node/shebang": "off",
+        "n/shebang": "off",
         "n/no-missing-import":"off"
       }
     }
