@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/glasskube/scout/compare/v0.2.0...v0.2.1) (2024-05-22)
+
+
+### Bug Fixes
+
+* add support for parsing actual release artifact urls ([73113a5](https://github.com/glasskube/scout/commit/73113a5a13c320856395f15b4995c8acc30b1196))
+
 ## [0.2.0](https://github.com/glasskube/scout/compare/v0.1.1...v0.2.0) (2024-05-22)
 
 
