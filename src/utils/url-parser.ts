@@ -1,12 +1,16 @@
 import {ArtifactHubReference} from '../models/artifact-hub-reference.js';
 import {ManifestUrl} from '../models/manifest-url.js';
 
-const MANIFEST_REGEX =
-  /^https:\/\/raw.githubusercontent.com\/(?<owner>[\da-z-]+)\/(?<repo>[\da-z-]+)\/(?<version>[\d.a-z-]+)(?<path>\/.*)/;
+const MANIFEST_REGEX = [
+  /^https:\/\/raw\.githubusercontent\.com\/(?<owner>[\da-z-]+)\/(?<repo>[\da-z-]+)\/(?<version>[\d.a-z-]+)(?<path>\/.*)/,
+  /^https:\/\/github\.com\/(?<owner>[\da-z-]+)\/(?<repo>[\da-z-]+)\/releases\/download\/(?<version>[\d.a-z-]+)(?<path>\/.*)/,
+];
 
 export function parseManifestUrl(manifestUrl: string): ManifestUrl {
-  const group = MANIFEST_REGEX.exec(manifestUrl)?.groups;
-  if (group !== undefined) {
+  const results = MANIFEST_REGEX.map(r => r.exec(manifestUrl)?.groups).filter(g => g !== undefined);
+
+  if (results.length > 0) {
+    const group = results[0]!;
     return new ManifestUrl(manifestUrl, group.owner, group.repo, group.version, group.path);
   }
 
