@@ -19,3 +19,8 @@ export async function getNextBuildNumber(appVersion: SemVer, pkg: PackagePaths) 
   const packageVersions = await getPackageVersions(pkg);
   return Math.max(0, ...(await getBuildNumbers(appVersion, packageVersions))) + 1;
 }
+
+export async function withNextBuildNumber(appVersion: SemVer, pkg: PackagePaths): Promise<SemVer> {
+  const buildNumber = await getNextBuildNumber(appVersion, pkg);
+  return new SemVer(`v${appVersion}+${buildNumber}`);
+}
