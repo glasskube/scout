@@ -21,3 +21,8 @@ export async function getFoldersIn(path: string): Promise<string[]> {
   const allFiles = await fs.readdir(path, {withFileTypes: true});
   return allFiles.filter(it => it.isDirectory()).map(it => it.name);
 }
+
+export async function getFilesIn(path: string): Promise<string[]> {
+  const allFiles = await fs.readdir(path, {withFileTypes: true});
+  return allFiles.filter(it => !it.isDirectory()).map(it => it.name);
+}

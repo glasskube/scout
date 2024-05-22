@@ -1,20 +1,30 @@
+import {copyFile} from 'node:fs/promises';
+import {join} from 'node:path';
 import {SemVer} from 'semver';
 import * as YAML from 'yaml';
 
-import {getNextBuildNumber, getPackageVersions} from './package.js';
+import {getPackageVersions} from './package.js';
 import {PackagePaths, PackageVersionPaths} from './paths.js';
 import {ArtifactHubPackage, PackageManifest} from './types/types.js';
-import {createDir, parseYaml, read, write} from './utils/io.js';
+import {createDir, getFilesIn, parseYaml, read, write} from './utils/io.js';
 
 export async function createNewManifestVersion(
   packagePaths: PackagePaths,
   packageManifest: PackageManifest,
   latestAppVersion: SemVer,
 ) {
-  const buildNumber = await getNextBuildNumber(latestAppVersion, packagePaths);
-  const version = `v${latestAppVersion}+${buildNumber}`;
-  await writePackageManifestFile(packagePaths.version(version), packageManifest);
-  await updateVersionsFile(packagePaths, version);
+  await writePackageManifestFile(packagePaths.version(latestAppVersion.raw), packageManifest);
+  await updateVersionsFile(packagePaths, latestAppVersion.raw);
+}
+
+export async function copyUnmanagedFiles(pkg: PackagePaths, oldVersion: SemVer, newVersion: SemVer) {
+  const oldVersionDir = pkg.version(oldVersion.raw);
+  const newVersionDir = pkg.version(newVersion.raw);
+  await Promise.all(
+    (await getFilesIn(oldVersionDir.dirName()))
+      .filter(file => file !== 'package.yaml')
+      .map(async file => await copyFile(join(oldVersionDir.dirName(), file), join(newVersionDir.dirName(), file))),
+  );
 }
 
 async function writePackageManifestFile(paths: PackageVersionPaths, packageManifest: PackageManifest) {

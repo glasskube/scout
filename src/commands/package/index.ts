@@ -4,7 +4,14 @@ import {SemVer} from 'semver';
 
 import {getArtifactPackage, getArtifactPackageVersion} from '../../datasources/artifacthub/index.js';
 import {getLatestRelease} from '../../datasources/github-release/index.js';
-import {createNewManifestVersion, getLatestManifest, getLatestVersion, updateHelmManifest} from '../../manifest.js';
+import {
+  copyUnmanagedFiles,
+  createNewManifestVersion,
+  getLatestManifest,
+  getLatestVersion,
+  updateHelmManifest,
+} from '../../manifest.js';
+import {withNextBuildNumber} from '../../package.js';
 import {Paths, packagePaths} from '../../paths.js';
 import {PackageReference, PlainManifest} from '../../types/glasskube/package-manifest.js';
 import {parseArtifactHubReferenceUrl, parseManifestUrl} from '../../utils/url-parser.js';
@@ -102,10 +109,25 @@ export default class Package extends Command {
       }
     }
 
-    if (!flags['dry-run'] && (newPackageManifestAvailable || flags.force)) {
-      this.log('will create new version');
-      await createNewManifestVersion(packagePaths, packageManifest, newAppVersion);
-      this.log('latest version created');
+    if (newPackageManifestAvailable || flags.force) {
+      newAppVersion = await withNextBuildNumber(newAppVersion, packagePaths);
+      for (const manifest of packageManifest.manifests ?? []) {
+        if (
+          manifest.url.startsWith('https://packages.dl.glasskube.dev/') ||
+          manifest.url.startsWith('https://glasskube.github.io/')
+        ) {
+          const newUrl = manifest.url.replace(currentAppVersion.raw, newAppVersion.raw);
+          this.log(`update manifest URL: ${manifest.url} -> ${newUrl}`);
+          manifest.url = newUrl;
+        }
+      }
+
+      if (!flags['dry-run']) {
+        this.log('will create new version');
+        await createNewManifestVersion(packagePaths, packageManifest, newAppVersion);
+        await copyUnmanagedFiles(packagePaths, currentAppVersion, newAppVersion);
+        this.log('latest version created');
+      }
     }
   }
 
