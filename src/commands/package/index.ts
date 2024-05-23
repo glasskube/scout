@@ -59,14 +59,21 @@ export default class Package extends Command {
         const latestChartVersion = new SemVer(latestChart.version!);
         if (latestChartVersion.compare(currentChartVersion) > 0) {
           this.log(`new release on Artifact Hub: ${latestChartVersion} (old: ${currentChartVersion.format()})`);
+          // download the current chart and determine whether this package uses the chart version or app version for
+          // the package version.
+          // Versions from artifacthub are null-checked first, because SemVer.compare(undefined) returns 0 (equal)!
           const currentChart = await getArtifactPackageVersion(referenceUrl, currentChartVersion.format());
-          if (currentAppVersion.compare(currentChart.version!) === 0) {
+          if (currentChart.version && currentAppVersion.compare(currentChart.version) === 0) {
             this.log(`using chart version as package version for ${flags.name}: ${latestChartVersion}`);
             newAppVersion = latestChartVersion;
             newPackageManifestAvailable = true;
-          } else if (currentAppVersion.compare(currentChart.appVersion!) === 0) {
+          } else if (
+            currentChart.appVersion &&
+            latestChart.appVersion &&
+            currentAppVersion.compare(currentChart.appVersion) === 0
+          ) {
             this.log(`using app version as package version for ${flags.name}: ${latestChart.appVersion}`);
-            newAppVersion = new SemVer(latestChart.appVersion!);
+            newAppVersion = new SemVer(latestChart.appVersion);
             newPackageManifestAvailable = true;
           } else {
             this.warn(`can not determine version to use for ${flags.name}`);
