@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/glasskube/scout/compare/v0.2.1...v0.3.0) (2024-05-23)
+
+
+### Features
+
+* add support for copying unmanaged files ([43ca399](https://github.com/glasskube/scout/commit/43ca399e4df3ef0c1c412a23c2acb74fad34f0f2))
+
+
+### Bug Fixes
+
+* only check either helm or manifest ([1fb4311](https://github.com/glasskube/scout/commit/1fb431172d44b78d1c07301e0ea4f6af0ebbf421))
+
 ## [0.2.1](https://github.com/glasskube/scout/compare/v0.2.0...v0.2.1) (2024-05-22)
 
 

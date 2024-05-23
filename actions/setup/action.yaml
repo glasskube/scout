@@ -16,6 +16,6 @@ runs:
         scope: "@glasskube"
     - name: Install scout
       shell: sh
-      run: npm install --global @glasskube/scout@0.2.1 # x-release-please-version
+      run: npm install --global @glasskube/scout@0.3.0 # x-release-please-version
       env:
         NODE_AUTH_TOKEN: ${{ inputs.token }}
