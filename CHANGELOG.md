@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/glasskube/scout/compare/v0.3.0...v0.3.1) (2024-05-24)
+
+
+### Bug Fixes
+
+* check artifacthub version undefined before comparing ([6c55321](https://github.com/glasskube/scout/commit/6c55321635c854175190fa7e3ed30a849a286de3))
+
 ## [0.3.0](https://github.com/glasskube/scout/compare/v0.2.1...v0.3.0) (2024-05-23)
 
 
