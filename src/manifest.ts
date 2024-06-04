@@ -4,7 +4,7 @@ import {SemVer} from 'semver';
 import * as YAML from 'yaml';
 
 import {getPackageVersions} from './package.js';
-import {PackagePaths, PackageVersionPaths} from './paths.js';
+import {ManifestYaml, PackagePaths, PackageVersionPaths} from './paths.js';
 import {ArtifactHubPackage, PackageManifest} from './types/types.js';
 import {createDir, getFilesIn, parseYaml, read, write} from './utils/io.js';
 
@@ -59,15 +59,32 @@ export async function updateLatestVersion(paths: PackagePaths): Promise<boolean>
   return false;
 }
 
-export async function getLatestVersion(paths: PackagePaths) {
+export async function getLatestVersion(paths: PackagePaths): Promise<SemVer> {
   const packageVersions = await getPackageVersions(paths);
   return new SemVer(packageVersions.latestVersion);
 }
 
+export async function getMaxVersion(paths: PackagePaths): Promise<SemVer> {
+  const versions = (await getPackageVersions(paths)).versions.map(it => new SemVer(it.version));
+  versions.sort((a, b) => a.compare(b));
+  const maxVersion = versions.at(-1);
+  if (maxVersion) {
+    return maxVersion;
+  }
+
+  throw new Error('versions must not be empty');
+}
+
+export async function getManifest(paths: ManifestYaml) {
+  return parseYaml<PackageManifest>(await read(paths.packageYaml()));
+}
+
 export async function getLatestManifest(paths: PackagePaths) {
-  const latestVersion = await getLatestVersion(paths);
-  const stringContent = await read(paths.version(latestVersion.raw).packageYaml());
-  return parseYaml<PackageManifest>(stringContent);
+  return getManifest(paths.version((await getLatestVersion(paths)).raw));
+}
+
+export async function getMaxVersionManifest(paths: PackagePaths) {
+  return getManifest(paths.version((await getMaxVersion(paths)).raw));
 }
 
 export function updateHelmManifest(packageData: PackageManifest, artifactHubData: ArtifactHubPackage) {

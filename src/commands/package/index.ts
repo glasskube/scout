@@ -7,8 +7,8 @@ import {getLatestRelease} from '../../datasources/github-release/index.js';
 import {
   copyUnmanagedFiles,
   createNewManifestVersion,
-  getLatestManifest,
-  getLatestVersion,
+  getMaxVersion,
+  getMaxVersionManifest,
   updateHelmManifest,
 } from '../../manifest.js';
 import {ManifestUrl} from '../../models/manifest-url.js';
@@ -42,10 +42,10 @@ export default class Package extends Command {
   public async run(): Promise<void> {
     const {flags} = await this.parse(Package);
     const packagePaths = this.paths.package(flags.name);
-    const packageManifest = await getLatestManifest(packagePaths);
+    const packageManifest = await getMaxVersionManifest(packagePaths);
 
     let newPackageManifestAvailable = false;
-    const currentAppVersion = await getLatestVersion(packagePaths);
+    const currentAppVersion = await getMaxVersion(packagePaths);
     let newAppVersion = currentAppVersion;
 
     if (packageManifest.helm) {
