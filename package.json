@@ -50,7 +50,7 @@
     "generate:types:glasskube": "scripts/generate_glasskube_types.sh"
   },
   "dependencies": {
-    "@oclif/core": "^3",
+    "@oclif/core": "^4.0.0",
     "@octokit/rest": "^20.0.2",
     "change-case": "^5.4.3",
     "semver": "^7.6.0",
