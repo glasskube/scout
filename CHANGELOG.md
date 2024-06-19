@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.3.2](https://github.com/glasskube/scout/compare/v0.3.1...v0.3.2) (2024-06-19)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @oclif/core to v3.26.9 ([6e7d679](https://github.com/glasskube/scout/commit/6e7d6799eae2aed5a5841ce0908f44b446607816))
+* **deps:** update dependency @oclif/core to v3.27.0 ([2e5593b](https://github.com/glasskube/scout/commit/2e5593b9661db86d46bd164289812ca9652549c4))
+* **deps:** update dependency @oclif/core to v4 ([f37bfba](https://github.com/glasskube/scout/commit/f37bfba3cb14aab1bf36c362b2a1498a9550eb50))
+* **deps:** update dependency @oclif/core to v4.0.2 ([b7a6b34](https://github.com/glasskube/scout/commit/b7a6b3421acea397bc31321667e367da86550f04))
+* **deps:** update dependency @oclif/core to v4.0.3 ([61618b2](https://github.com/glasskube/scout/commit/61618b2ec65f22403b7bc3b1cc425a9bfd9910b7))
+* **deps:** update dependency @oclif/core to v4.0.5 ([c707eb2](https://github.com/glasskube/scout/commit/c707eb26f0e01d54a95e1fe4961e1bed0a2334ef))
+* **deps:** update dependency @oclif/core to v4.0.6 ([d955d1b](https://github.com/glasskube/scout/commit/d955d1b9280c862c128b28c086f5860f84b7a942))
+* **deps:** update dependency yaml to v2.4.3 ([bf98bcc](https://github.com/glasskube/scout/commit/bf98bcc6515d5657cb1b496a6bed7fd09b321a38))
+* **deps:** update dependency yaml to v2.4.5 ([4c31759](https://github.com/glasskube/scout/commit/4c317591cdf1ac1cd7e13d123bf2226675f62064))
+* use max version instead of latest for package update check ([1a9ec07](https://github.com/glasskube/scout/commit/1a9ec079974f69f00681f98db558865a7ae64f70))
+
 ## [0.3.1](https://github.com/glasskube/scout/compare/v0.3.0...v0.3.1) (2024-05-24)
 
 
