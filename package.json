@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "@oclif/core": "^4.0.0",
-    "@octokit/rest": "^20.0.2",
+    "@octokit/rest": "^21.0.0",
     "change-case": "^5.4.3",
     "semver": "^7.6.0",
     "yaml": "^2.3.4"
