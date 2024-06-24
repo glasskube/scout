@@ -5,7 +5,18 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+export type PackageScope = "Cluster" | "Namespaced";
+export type ValueType = "boolean" | "text" | "number" | "options";
+export type ValueDefinitionTarget = {
+  resource?: TypedObjectReference;
+  chartName?: string;
+  patch: PartialJsonPatch;
+  valueTemplate?: string;
+} & ValueDefinitionTarget1;
+export type ValueDefinitionTarget1 = WithResource | WithChartName;
+
 export interface HttpsGlasskubeDevSchemasV1PackageManifestJson {
+  scope?: PackageScope;
   name: string;
   shortDescription?: string;
   longDescription?: string;
@@ -14,8 +25,12 @@ export interface HttpsGlasskubeDevSchemasV1PackageManifestJson {
   helm?: HelmManifest;
   kustomize?: KustomizeManifest;
   manifests?: PlainManifest[];
+  valueDefinitions?: {
+    [k: string]: ValueDefinition;
+  };
   defaultNamespace: string;
   entrypoints?: PackageEntrypoint[];
+  dependencies?: Dependency[];
 }
 export interface PackageReference {
   label: string;
@@ -33,6 +48,44 @@ export interface JSON {
 export interface KustomizeManifest {}
 export interface PlainManifest {
   url: string;
+  defaultNamespace?: string;
+}
+export interface ValueDefinition {
+  type: ValueType;
+  metadata?: ValueDefinitionMetadata;
+  defaultValue?: string;
+  options?: string[];
+  constraints?: ValueDefinitionConstraints;
+  targets: ValueDefinitionTarget[];
+}
+export interface ValueDefinitionMetadata {
+  label?: string;
+  description?: string;
+  hints?: string[];
+}
+export interface ValueDefinitionConstraints {
+  required?: boolean;
+  min?: number;
+  max?: number;
+  minLength?: number;
+  maxLength?: number;
+  pattern?: string;
+}
+export interface TypedObjectReference {
+  apiGroup: string;
+  kind: string;
+  name: string;
+  namespace?: string;
+}
+export interface PartialJsonPatch {
+  op: string;
+  path: string;
+}
+export interface WithResource {
+  [k: string]: unknown;
+}
+export interface WithChartName {
+  [k: string]: unknown;
 }
 export interface PackageEntrypoint {
   name?: string;
@@ -40,4 +93,8 @@ export interface PackageEntrypoint {
   port: number;
   localPort?: number;
   scheme?: string;
+}
+export interface Dependency {
+  name: string;
+  version?: string;
 }
