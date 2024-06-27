@@ -5,6 +5,8 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+export type PackageScope = 'Cluster' | 'Namespaced';
+
 export interface HttpsGlasskubeDevSchemasV1IndexJson {
   packages: PackageRepoIndexItem[];
 }
@@ -13,4 +15,5 @@ export interface PackageRepoIndexItem {
   shortDescription?: string;
   iconUrl?: string;
   latestVersion?: string;
+  scope?: PackageScope;
 }
