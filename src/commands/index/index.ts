@@ -50,6 +50,7 @@ export default class Index extends Command {
       iconUrl: packageManifest.iconUrl,
       latestVersion: latestVersion.raw,
       name: packageFolder,
+      scope: packageManifest.scope,
       shortDescription: packageManifest.shortDescription,
     };
   }
