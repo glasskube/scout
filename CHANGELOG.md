@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.3](https://github.com/glasskube/scout/compare/v0.3.2...v0.3.3) (2024-06-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @oclif/core to v4.0.7 ([84bb283](https://github.com/glasskube/scout/commit/84bb2833853687b438d91e2829af84a48f8c19a7))
+* **deps:** update dependency @octokit/rest to v21 ([e59bfd6](https://github.com/glasskube/scout/commit/e59bfd6fd44cf12d0923317da6e277881c968439))
+
 ## [0.3.2](https://github.com/glasskube/scout/compare/v0.3.1...v0.3.2) (2024-06-19)
 
 
