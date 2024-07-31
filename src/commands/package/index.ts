@@ -109,7 +109,7 @@ export default class Package extends Command {
           newAppVersion = latestRelease;
           newPackageManifestAvailable = true;
           this.log(`new release on GitHub: ${latestRelease}`);
-          plainManifest.url = manifestUrl.raw.replace(manifestUrl.semVer.raw, latestRelease.raw);
+          plainManifest.url = manifestUrl.raw.replaceAll(manifestUrl.semVer.format(), latestRelease.format());
         } else {
           this.log('no newer manifest release found');
         }
