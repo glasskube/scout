@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.3.4](https://github.com/glasskube/scout/compare/v0.3.3...v0.3.4) (2024-08-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @oclif/core to v4.0.11 ([6c1c771](https://github.com/glasskube/scout/commit/6c1c771381ce0e5095a666a34f197b9c3c9f9377))
+* **deps:** update dependency @oclif/core to v4.0.12 ([545fc15](https://github.com/glasskube/scout/commit/545fc158bdaff5f6cd27adca77f64f90b58def77))
+* **deps:** update dependency @oclif/core to v4.0.13 ([bd703ca](https://github.com/glasskube/scout/commit/bd703ca7b34c8cbe51c2db5dfcbeb6c93d774eaf))
+* **deps:** update dependency @oclif/core to v4.0.14 ([19fb578](https://github.com/glasskube/scout/commit/19fb5784a669dcaba4c2ab5d4f23bd71965af05b))
+* **deps:** update dependency @oclif/core to v4.0.15 ([d58f9e9](https://github.com/glasskube/scout/commit/d58f9e9f99ea340a98587d4832b272975950fdeb))
+* **deps:** update dependency @oclif/core to v4.0.16 ([74ea046](https://github.com/glasskube/scout/commit/74ea046132981c7d383d64b0e93cfa479789b976))
+* **deps:** update dependency @oclif/core to v4.0.17 ([9326f5d](https://github.com/glasskube/scout/commit/9326f5d4160b9029b459aae786a73d55a7511013))
+* **deps:** update dependency @oclif/core to v4.0.8 ([4d733c3](https://github.com/glasskube/scout/commit/4d733c3fa277cfbf40067e7ab29f0f6c14225636))
+* **deps:** update dependency @oclif/core to v4.0.9 ([b1553b5](https://github.com/glasskube/scout/commit/b1553b5275afcd32a3f2431c94856df189a3a184))
+* **deps:** update dependency @octokit/rest to v21.0.1 ([e198171](https://github.com/glasskube/scout/commit/e198171d262bdfeed84545194643db1bd91b104f))
+* **deps:** update dependency semver to v7.6.3 ([1fcff91](https://github.com/glasskube/scout/commit/1fcff91d43577baee7ef88330a8eb29111c30337))
+* **deps:** update dependency yaml to v2.5.0 ([9e41670](https://github.com/glasskube/scout/commit/9e416708c348734753a78389799ad412bafb7bd0))
+* replace all occurances of version in manifest url ([99f0c79](https://github.com/glasskube/scout/commit/99f0c79743b1de997fc91b65e43f78bce510d3b7))
+
 ## [0.3.3](https://github.com/glasskube/scout/compare/v0.3.2...v0.3.3) (2024-06-30)
 
 
