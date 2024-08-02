@@ -2,7 +2,7 @@
   "name": "@glasskube/scout",
   "description": "Glasskube package update util",
   "author": "Philip Miglinci",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "license": "Apache-2.0",
   "homepage": "https://github.com/glasskube/scout",
   "bugs": "https://github.com/glasskube/scout/issues",
