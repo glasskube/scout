@@ -57,7 +57,7 @@
     "yaml": "^2.3.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.3.0",
+    "@commitlint/cli": "19.4.0",
     "@commitlint/config-conventional": "19.2.2",
     "@oclif/prettier-config": "^0.2.1",
     "@oclif/test": "^4.0.0",
