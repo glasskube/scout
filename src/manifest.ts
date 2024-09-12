@@ -6,7 +6,7 @@ import * as YAML from 'yaml';
 import {getPackageVersions} from './package.js';
 import {ManifestYaml, PackagePaths, PackageVersionPaths} from './paths.js';
 import {ArtifactHubPackage, PackageManifest} from './types/types.js';
-import {createDir, getFilesIn, parseYaml, read, write} from './utils/io.js';
+import {createDir, exists, getFilesIn, parseYaml, read, write} from './utils/io.js';
 
 export async function createNewManifestVersion(
   packagePaths: PackagePaths,
@@ -25,6 +25,19 @@ export async function copyUnmanagedFiles(pkg: PackagePaths, oldVersion: SemVer, 
       .filter(file => file !== 'package.yaml')
       .map(async file => await copyFile(join(oldVersionDir.dirName(), file), join(newVersionDir.dirName(), file))),
   );
+}
+
+export async function copyTestDirectory(pkg: PackagePaths, oldVersion: SemVer, newVersion: SemVer) {
+  const oldVersionDir = pkg.version(oldVersion.raw);
+  const newVersionDir = pkg.version(newVersion.raw);
+  if (await exists(oldVersionDir.testDir())) {
+    await createDir(newVersionDir.testDir());
+    await Promise.all(
+      (await getFilesIn(oldVersionDir.testDir())).map(
+        async file => await copyFile(join(oldVersionDir.testDir(), file), join(newVersionDir.testDir(), file)),
+      ),
+    );
+  }
 }
 
 async function writePackageManifestFile(paths: PackageVersionPaths, packageManifest: PackageManifest) {
