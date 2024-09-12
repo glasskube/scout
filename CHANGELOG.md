@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.5](https://github.com/glasskube/scout/compare/v0.3.4...v0.3.5) (2024-09-12)
+
+
+### Bug Fixes
+
+* copy test files to new version ([#320](https://github.com/glasskube/scout/issues/320)) ([26e4ba4](https://github.com/glasskube/scout/commit/26e4ba46f9d70ef57be8c085a74bf5c0bd62af56))
+* **deps:** update dependency @oclif/core to v4.0.18 ([1bf31b8](https://github.com/glasskube/scout/commit/1bf31b8c0a313b4a0f65df8efdfa6462e22cc6dc))
+* **deps:** update dependency @oclif/core to v4.0.19 ([0fecd8e](https://github.com/glasskube/scout/commit/0fecd8e053621f4209c15fd14e995c0f246f801a))
+* **deps:** update dependency @oclif/core to v4.0.20 ([f3250c2](https://github.com/glasskube/scout/commit/f3250c21604675789c7af4504d397c817dae6c6c))
+* **deps:** update dependency @oclif/core to v4.0.21 ([ce89836](https://github.com/glasskube/scout/commit/ce89836685ccf7666d36e869e4bbc20ebb768ba0))
+* **deps:** update dependency @octokit/rest to v21.0.2 ([1deca49](https://github.com/glasskube/scout/commit/1deca4943ac296d1b2bf6770a6ee89bfb54aac3d))
+* **deps:** update dependency yaml to v2.5.1 ([8e124ee](https://github.com/glasskube/scout/commit/8e124ee7f084083cc2964c17885ca7aed69aaa7b))
+
 ## [0.3.4](https://github.com/glasskube/scout/compare/v0.3.3...v0.3.4) (2024-08-02)
 
 
