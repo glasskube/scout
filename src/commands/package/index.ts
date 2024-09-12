@@ -5,6 +5,7 @@ import {SemVer} from 'semver';
 import {getArtifactPackage, getArtifactPackageVersion} from '../../datasources/artifacthub/index.js';
 import {getLatestRelease} from '../../datasources/github-release/index.js';
 import {
+  copyTestDirectory,
   copyUnmanagedFiles,
   createNewManifestVersion,
   getMaxVersion,
@@ -133,6 +134,7 @@ export default class Package extends Command {
         this.log('will create new version');
         await createNewManifestVersion(packagePaths, packageManifest, newAppVersion);
         await copyUnmanagedFiles(packagePaths, currentAppVersion, newAppVersion);
+        await copyTestDirectory(packagePaths, currentAppVersion, newAppVersion);
         this.log('latest version created');
       }
     }

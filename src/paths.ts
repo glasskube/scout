@@ -5,7 +5,8 @@ type DirName = {readonly dirName: StringSupplier};
 type IndexYaml = {readonly indexYaml: StringSupplier};
 export type VersionsYaml = {readonly versionsYaml: StringSupplier};
 export type ManifestYaml = {readonly packageYaml: StringSupplier};
-export type PackageVersionPaths = DirName & ManifestYaml;
+export type TestDir = {readonly testDir: StringSupplier};
+export type PackageVersionPaths = DirName & ManifestYaml & TestDir;
 type WithPackageVersion = {readonly version: (version: string) => PackageVersionPaths};
 export type PackagePaths = DirName & ManifestYaml & VersionsYaml & WithPackageVersion;
 type WithPackage = {readonly package: (name: string) => PackagePaths};
@@ -21,6 +22,7 @@ export function packagePaths(base: string): Paths {
       version: (version: string) => ({
         dirName: () => path.join(base, name, version),
         packageYaml: () => path.join(base, name, version, 'package.yaml'),
+        testDir: () => path.join(base, name, version, '.test'),
       }),
       versionsYaml: () => path.join(base, name, 'versions.yaml'),
     }),
