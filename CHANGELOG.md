@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.6](https://github.com/glasskube/scout/compare/v0.3.5...v0.3.6) (2024-10-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @oclif/core to v4.0.22 ([95ce966](https://github.com/glasskube/scout/commit/95ce966e298a40f32a32a9c01b2176e3dbd91960))
+* **deps:** update dependency @oclif/core to v4.0.23 ([af4ebd6](https://github.com/glasskube/scout/commit/af4ebd6680427f86726a5612415beccd87ff2344))
+* **deps:** update dependency @oclif/core to v4.0.25 ([5572b46](https://github.com/glasskube/scout/commit/5572b460d634474843f379a4505f7e734bbdbb03))
+* **deps:** update dependency @oclif/core to v4.0.26 ([fe28ef2](https://github.com/glasskube/scout/commit/fe28ef2d832c734c81acb72a6db72e483c6a5a5d))
+
 ## [0.3.5](https://github.com/glasskube/scout/compare/v0.3.4...v0.3.5) (2024-09-12)
 
 
