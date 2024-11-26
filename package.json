@@ -73,7 +73,7 @@
     "mocha": "^10",
     "msw": "2.6.2",
     "oclif": "^4.4.2",
-    "prettier": "3.4.0",
+    "prettier": "3.4.1",
     "shx": "^0.3.4",
     "tsx": "4.19.2",
     "typescript": "^5"
